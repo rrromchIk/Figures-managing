@@ -18,7 +18,7 @@
             <ComboBox fx:id="figuresComboBox" prefHeight="30.0" prefWidth="150.0" promptText="Choose figure" />
             <TextField fx:id="nameTextField" prefHeight="30.0" prefWidth="149.0" promptText="&quot;name&quot;" />
             <TextField fx:id="sizeTextField" prefHeight="30.0" prefWidth="126.0" promptText="size" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Display " />
+            <Button fx:id="displayAll" mnemonicParsing="false" onAction="#onDisplayAllButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Display " />
          </children>
          <opaqueInsets>
             <Insets />
