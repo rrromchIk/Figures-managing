@@ -36,6 +36,10 @@ public class MyCircle extends Figure {
         return radius;
     }
 
+    public double getDiameter() {
+        return radius * 2;
+    }
+
     @Override
     public String displayInfo() {
         return super.displayInfo() + String.format("Radius: %.2f%nDiameter: %.2f%n%n", radius, radius * 2);
