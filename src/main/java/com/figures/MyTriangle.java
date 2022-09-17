@@ -38,7 +38,7 @@ public class MyTriangle extends Figure {
             setArea((1.0 / 2.0) * Math.abs((pointA.getX() - pointC.getX()) * (pointB.getY() - pointA.getY()) -
                     (pointA.getX() - pointB.getX()) * (pointC.getY() - pointA.getY())));
             setCircumscribedCircleRadius(calculateCircumscribedCircleRadius(a, b, c));
-            setInscribedCircleRadius(calculateInscribedCircleRadius(a, b, c));
+            setInscribedCircleRadius(calculateInscribedCircleRadius());
         } else {
             throw new IllegalArgumentException("Bad sides!");
         }
@@ -117,7 +117,7 @@ public class MyTriangle extends Figure {
         return ((a * b * c) / (4 * getArea()));
     }
 
-    private double calculateInscribedCircleRadius(double a, double b, double c) {
+    private double calculateInscribedCircleRadius() {
         return ((2 * getArea()) / getPerimeter());
     }
 }

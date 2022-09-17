@@ -3,10 +3,12 @@ package com.main;
 import com.figures.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -15,13 +17,23 @@ import java.net.URL;
 import java.util.*;
 
 public class MyController implements Initializable {
-    private List<Figure> figures;
-    private Map<String, Shape> figuresMap;
-    @FXML
-    private TextField nameTextField, sizeTextField, minPerimeterTextField, maxAreaTextField;
 
+    private static final String THERE_ARE_NO_FIGURES = "There are no figures added!";
+    private static final String TRY_TO_ADD_ANY_FIGURE = "Try to add any figure :)";
+    private List<Figure> figures;
+    //private Map<String, Shape> figuresMap;
     @FXML
-    private ComboBox<String> figuresComboBox, namesComboBox;
+    private TextField nameTextField;
+    @FXML
+    private TextField sizeTextField;
+    @FXML
+    private TextField minPerimeterTextField;
+    @FXML
+    private TextField maxAreaTextField;
+    @FXML
+    private ComboBox<String> figuresComboBox;
+    @FXML
+    private ComboBox<String> namesComboBox;
 
     @FXML
     private Pane pane;
@@ -33,8 +45,11 @@ public class MyController implements Initializable {
         String name = nameTextField.getText();
         String size = sizeTextField.getText();
         try {
-            if (figuresComboBox.getValue() == null || size.isEmpty() || name.isEmpty())
-                throw new IllegalArgumentException("Choose figure!");
+            if (figuresComboBox.getValue() == null)
+                throw new IllegalArgumentException("Choose figure!!!");
+            if(size.isEmpty() || name.isEmpty()) {
+                throw new IllegalArgumentException("Fill all text fields!!!");
+            }
 
             switch (figuresComboBox.getValue()) {
                 case "Circle" ->  figures.add(new MyCircle(name, Double.parseDouble(size)));
@@ -47,9 +62,9 @@ public class MyController implements Initializable {
             }
             namesComboBox.getItems().add(name);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage(), e);
+            showAlert("It looks like something went wrong!", e.getMessage());
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Bad input!");
+            showAlert("Bad input", "Write tree side sizes for triangle!");
         }
 
         clearTextFields();
@@ -58,29 +73,35 @@ public class MyController implements Initializable {
     public void onWriteToFileButtonCLicked() throws IOException {
         if(!figures.isEmpty()) {
             Figure.writeToFile(figures, "D:\\test.txt");
-        } else
-            throw new IllegalArgumentException("There are no figures!");
+        } else {
+            showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
+        }
     }
 
     public void onSortFiguresButtonCLicked() {
         if(!figures.isEmpty()) {
             Figure.sortFiguresByInscribedCircleRadius(figures).forEach(System.out::println);
-        } else
-           throw new IllegalArgumentException("There are no figures!");
+        } else {
+            showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
+        }
     }
 
     public void onMaxAreaFigureButtonClicked() {
         if(!figures.isEmpty()) {
             maxAreaTextField.setText(Figure.getMaxAreaFigure(figures).getName());
-        } else
-            throw new NoSuchElementException("There are no figures");
+        } else {
+            showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
+        }
+            //throw new NoSuchElementException("There are no figures");
     }
 
     public void onMinPerimeterFigureButtonClicked() {
         if(!figures.isEmpty()) {
             minPerimeterTextField.setText(Figure.getMinPerimeterFigure(figures).getName());
-        } else
-            throw new NoSuchElementException("There are no figures");
+        } else {
+            showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
+        }
+            //throw new NoSuchElementException("There are no figures");
     }
 
     public void onFillButtonClicked() {
@@ -91,15 +112,23 @@ public class MyController implements Initializable {
             circle.setCenterX(50);
             circle.setCenterY(50);
             circle.setFill(colorPicker.getValue());
+            circle.setOnMouseMoved(event -> {
+                if(circle.getFill().equals(Color.BLACK)) {
+                    circle.setFill(Color.BLUEVIOLET);
+                } else
+                    circle.setFill(Color.BLACK);
+            });
             pane.getChildren().add(circle);
-        } else
-            throw new IllegalArgumentException("choose name!");
+        } else {
+            showAlert("Choose figure name!",
+                    "If there are no names, " + TRY_TO_ADD_ANY_FIGURE);
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         figures = new ArrayList<>();
-        figuresMap = new HashMap<>();
+        //figuresMap = new HashMap<>();
         figuresComboBox.getItems().addAll("Circle", "Square", "Triangle");
     }
 
@@ -108,5 +137,13 @@ public class MyController implements Initializable {
         minPerimeterTextField.setText("");
         nameTextField.setText("");
         sizeTextField.setText("");
+    }
+
+    private void showAlert(String headerText, String bodyText) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Ups..");
+        alert.setHeaderText(headerText);
+        alert.setContentText(bodyText);
+        alert.showAndWait();
     }
 }
