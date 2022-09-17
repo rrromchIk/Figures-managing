@@ -3,15 +3,13 @@ package com.main;
 import com.figures.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -20,8 +18,9 @@ public class MyController implements Initializable {
 
     private static final String THERE_ARE_NO_FIGURES = "There are no figures added!";
     private static final String TRY_TO_ADD_ANY_FIGURE = "Try to add any figure :)";
-    private List<Figure> figures;
-    //private Map<String, Shape> figuresMap;
+    private final List<Figure> figures = new ArrayList<>();
+    private final Map<String, Shape> figuresMap = new HashMap<>();
+
     @FXML
     private TextField nameTextField;
     @FXML
@@ -34,10 +33,8 @@ public class MyController implements Initializable {
     private ComboBox<String> figuresComboBox;
     @FXML
     private ComboBox<String> namesComboBox;
-
     @FXML
     private Pane pane;
-
     @FXML
     private ColorPicker colorPicker;
 
@@ -60,6 +57,7 @@ public class MyController implements Initializable {
                             Double.parseDouble(sides[2])));
                 }
             }
+            displayFigures(figures);
             namesComboBox.getItems().add(name);
         } catch (IllegalArgumentException e) {
             showAlert("It looks like something went wrong!", e.getMessage());
@@ -80,7 +78,7 @@ public class MyController implements Initializable {
 
     public void onSortFiguresButtonCLicked() {
         if(!figures.isEmpty()) {
-            Figure.sortFiguresByInscribedCircleRadius(figures).forEach(System.out::println);
+            displayFigures(Figure.sortFiguresByInscribedCircleRadius(figures));
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -92,7 +90,6 @@ public class MyController implements Initializable {
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
-            //throw new NoSuchElementException("There are no figures");
     }
 
     public void onMinPerimeterFigureButtonClicked() {
@@ -101,34 +98,26 @@ public class MyController implements Initializable {
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
-            //throw new NoSuchElementException("There are no figures");
     }
 
     public void onFillButtonClicked() {
-        if(namesComboBox.getValue() == null) {
-            //figuresMap.get(namesComboBox.getValue()).setFill(colorPicker.getValue());
-            Circle circle = new Circle();
-            circle.setRadius(50);
-            circle.setCenterX(50);
-            circle.setCenterY(50);
-            circle.setFill(colorPicker.getValue());
-            circle.setOnMouseMoved(event -> {
-                if(circle.getFill().equals(Color.BLACK)) {
-                    circle.setFill(Color.BLUEVIOLET);
-                } else
-                    circle.setFill(Color.BLACK);
-            });
-            pane.getChildren().add(circle);
+        if(namesComboBox.getValue() != null) {
+            figuresMap.get(namesComboBox.getValue()).setFill(colorPicker.getValue());
         } else {
-            showAlert("Choose figure name!",
-                    "If there are no names, " + TRY_TO_ADD_ANY_FIGURE);
+            showAlert("Choose figure name!", "If there are no names, " + TRY_TO_ADD_ANY_FIGURE);
+        }
+    }
+
+    public void onDisplayAllButtonClicked() {
+        if(!figures.isEmpty()) {
+            displayFigures(figures);
+        } else {
+            showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        figures = new ArrayList<>();
-        //figuresMap = new HashMap<>();
         figuresComboBox.getItems().addAll("Circle", "Square", "Triangle");
     }
 
@@ -145,5 +134,46 @@ public class MyController implements Initializable {
         alert.setHeaderText(headerText);
         alert.setContentText(bodyText);
         alert.showAndWait();
+    }
+
+    private void displayFigures(List<Figure> figures) {
+        pane.getChildren().forEach(node -> node.setVisible(false));
+        double padding = 10;
+        final double[] rightMostX = {padding};
+        final double[] downMostY = {padding};
+        figures.forEach(figure -> {
+            if(figure instanceof MyCircle myCircle) {
+                Circle circle = new Circle(myCircle.getRadius());
+                circle.setCenterX(rightMostX[0] + myCircle.getRadius());
+                circle.setCenterY(downMostY[0] + myCircle.getRadius());
+                circle.setFill(Color.RED);
+                Tooltip.install(circle, new Tooltip(myCircle.displayInfo()));
+                figuresMap.put(myCircle.getName(), circle);
+                pane.getChildren().add(circle);
+                rightMostX[0] += myCircle.getDiameter() + padding;
+            } else if(figure instanceof MySquare mySquare) {
+                Rectangle square = new Rectangle();
+                square.setWidth(mySquare.getSide());
+                square.setHeight(mySquare.getSide());
+                square.setX(rightMostX[0]);
+                square.setY(downMostY[0]);
+                square.setFill(Color.GREEN);
+                Tooltip.install(square, new Tooltip(mySquare.displayInfo()));
+                figuresMap.put(mySquare.getName(), square);
+                pane.getChildren().add(square);
+                rightMostX[0] += mySquare.getSide() + padding;
+            } else if(figure instanceof MyTriangle myTriangle) {
+                Polygon triangle = new Polygon();
+                triangle.getPoints().addAll(rightMostX[0], downMostY[0] + myTriangle.getC().getY(),
+                        rightMostX[0] + myTriangle.getB().getX(), downMostY[0] + myTriangle.getC().getY(),
+                        rightMostX[0] + myTriangle.getC().getX(), downMostY[0]);
+                triangle.setFill(Color.BLUE);
+                Tooltip.install(triangle, new Tooltip(myTriangle.displayInfo()));
+                figuresMap.put(myTriangle.getName(), triangle);
+                pane.getChildren().add(triangle);
+                rightMostX[0] += (myTriangle.getB().getX() > myTriangle.getC().getX() ? myTriangle.getB().getX() :
+                                        myTriangle.getC().getX()) + padding;
+            }
+        });
     }
 }
