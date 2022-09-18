@@ -84,7 +84,8 @@ public class MyController implements Initializable {
 
     public void onMaxAreaFigureButtonClicked() {
         if(!figures.isEmpty()) {
-            maxAreaTextField.setText(Figure.getMaxAreaFigure(figures).getName());
+            Figure figure = Figure.getMaxAreaFigure(figures);
+            maxAreaTextField.setText(String.format("%s: %.2f", figure.getName(), figure.getArea()));
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -92,7 +93,8 @@ public class MyController implements Initializable {
 
     public void onMinPerimeterFigureButtonClicked() {
         if(!figures.isEmpty()) {
-            minPerimeterTextField.setText(Figure.getMinPerimeterFigure(figures).getName());
+            Figure figure = Figure.getMinPerimeterFigure(figures);
+            minPerimeterTextField.setText(String.format("%s: %.2f", figure.getName(), figure.getPerimeter()));
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -122,7 +124,12 @@ public class MyController implements Initializable {
     public void onGreaterThanButtonClicked() {
         String text = givenArea.getText();
         if(!text.isEmpty()) {
-            displayFigures(Figure.getFiguresWithAreaGreaterThenGiven(figures, Double.parseDouble(text)));
+            List<Figure> list = Figure.getFiguresWithAreaGreaterThenGiven(figures, Double.parseDouble(text));
+            if(list.isEmpty())
+                showAlert("There are no figures with are greater than " + text, "Try again!");
+            else
+                displayFigures(list);
+            givenArea.setText("");
         } else {
             showAlert("It looks like something went wrong!", "Enter any area value!");
         }
