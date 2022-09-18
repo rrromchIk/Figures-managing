@@ -11,7 +11,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="882.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.MyController">
    <children>
-      <Pane fx:id="pane" prefHeight="558.0" prefWidth="882.0" />
+      <Pane fx:id="pane" prefHeight="552.0" prefWidth="882.0" />
       <HBox alignment="CENTER" prefHeight="106.0" prefWidth="882.0" spacing="5.0">
          <children>
             <Button fx:id="addFigureButton" mnemonicParsing="false" onAction="#onAddFigureButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Add" />
@@ -29,12 +29,12 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="maxAreaButton" mnemonicParsing="false" onAction="#onMaxAreaFigureButtonClicked" text="Max S" />
-            <TextField fx:id="maxAreaTextField" editable="false" prefHeight="26.0" prefWidth="114.0" promptText="name of max area" />
-            <Button fx:id="minPerimeterButton" mnemonicParsing="false" onAction="#onMinPerimeterFigureButtonClicked" text="Min P" />
-            <TextField fx:id="minPerimeterTextField" editable="false" prefHeight="26.0" prefWidth="141.0" promptText="name of min perimeter" />
-            <Button fx:id="writeToFileButton" mnemonicParsing="false" onAction="#onWriteToFileButtonCLicked" text="Write to file" />
-            <Button fx:id="sortFiguresButton" mnemonicParsing="false" onAction="#onSortFiguresButtonCLicked" prefHeight="26.0" prefWidth="45.0" text="Sort" />
+            <Button fx:id="maxAreaButton" mnemonicParsing="false" onAction="#onMaxAreaFigureButtonClicked" prefHeight="30.0" text="Max S" />
+            <TextField fx:id="maxAreaTextField" editable="false" prefHeight="30.0" prefWidth="114.0" promptText="name of max area" />
+            <Button fx:id="minPerimeterButton" mnemonicParsing="false" onAction="#onMinPerimeterFigureButtonClicked" prefHeight="30.0" text="Min P" />
+            <TextField fx:id="minPerimeterTextField" editable="false" prefHeight="30.0" prefWidth="141.0" promptText="name of min perimeter" />
+            <Button fx:id="writeToFileButton" mnemonicParsing="false" onAction="#onWriteToFileButtonCLicked" prefHeight="30.0" text="Write to file" />
+            <Button fx:id="sortFiguresButton" mnemonicParsing="false" onAction="#onSortFiguresButtonCLicked" prefHeight="30.0" prefWidth="45.0" text="Sort" />
          </children>
          <padding>
             <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
@@ -42,9 +42,9 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="fillButton" mnemonicParsing="false" onAction="#onFillButtonClicked" text="Fill" />
-            <ComboBox fx:id="namesComboBox" prefWidth="150.0" promptText="Name of figure" />
-            <ColorPicker fx:id="colorPicker" />
+            <Button fx:id="fillButton" mnemonicParsing="false" onAction="#onFillButtonClicked" prefHeight="30.0" text="Fill" />
+            <ComboBox fx:id="namesComboBox" prefHeight="30.0" prefWidth="150.0" promptText="Name of figure" />
+            <ColorPicker fx:id="colorPicker" prefHeight="30.0" />
          </children>
          <VBox.margin>
             <Insets />
@@ -52,5 +52,14 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding></HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Button fx:id="greaterThan" mnemonicParsing="false" onAction="#onGreaterThanButtonClicked" prefHeight="30.0" text="Greater than" />
+            <TextField fx:id="givenArea" prefHeight="26.0" prefWidth="99.0" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
    </children>
 </VBox>
