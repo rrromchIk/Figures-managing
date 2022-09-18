@@ -1,5 +1,8 @@
 package com.figures;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,6 +40,7 @@ public abstract class Figure {
     private double perimeter;
     private double inscribedCircleRadius;
     private double circumscribedCircleRadius;
+    private Color color = Color.BLACK;
     public static final double DEFAULT_SIDE_VALUE = 100d;
 
     Figure(String name) {
@@ -77,6 +81,14 @@ public abstract class Figure {
 
     public double getCircumscribedCircleRadius() {
         return circumscribedCircleRadius;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public String displayInfo() {
