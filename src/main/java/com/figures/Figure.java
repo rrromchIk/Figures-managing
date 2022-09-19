@@ -1,8 +1,6 @@
 package com.figures;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,11 +38,14 @@ public abstract class Figure {
     private double perimeter;
     private double inscribedCircleRadius;
     private double circumscribedCircleRadius;
-    private Color color = Color.BLACK;
+    private Color color;
     public static final double DEFAULT_SIDE_VALUE = 100d;
+
+    protected static int counterOfFigures = 0;
 
     Figure(String name) {
         this.name = name;
+        counterOfFigures++;
     }
 
     public String getName() {
