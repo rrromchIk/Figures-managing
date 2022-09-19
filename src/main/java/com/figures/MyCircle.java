@@ -8,17 +8,24 @@ package com.figures;
  *
  */
 
+import javafx.scene.paint.Color;
+
 public class MyCircle extends Figure {
     private double radius;
+    private static final Color DEFAULT_CIRCLE_COLOR = Color.YELLOW;
+
+    public MyCircle() {
+        this("circle" + counterOfFigures);
+    }
 
     public MyCircle(String name) {
-        super(name);
-        setRadius(DEFAULT_SIDE_VALUE);
+        this(name, DEFAULT_SIDE_VALUE);
     }
 
     public MyCircle(String name, double radius) {
         super(name);
         setRadius(radius);
+        setColor(DEFAULT_CIRCLE_COLOR);
     }
 
     public void setRadius(double radius) {

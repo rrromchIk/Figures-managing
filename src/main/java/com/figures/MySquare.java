@@ -8,17 +8,24 @@ package com.figures;
  *
  */
 
+import javafx.scene.paint.Color;
+
 public class MySquare extends Figure {
     private double side;
+    private static final Color DEFAULT_SQUARE_COLOR = Color.BLUE;
+
+    public MySquare() {
+        this("square" + counterOfFigures);
+    }
 
     public MySquare(String name) {
-        super(name);
-        setSide(DEFAULT_SIDE_VALUE);
+        this(name, DEFAULT_SIDE_VALUE);
     }
 
     public MySquare(String name, double side) {
         super(name);
         setSide(side);
+        setColor(DEFAULT_SQUARE_COLOR);
     }
 
     public void setSide(double side) {

@@ -8,6 +8,8 @@ package com.figures;
  *
  */
 
+import javafx.scene.paint.Color;
+
 public class MyTriangle extends Figure {
     private double sideA;
     private double sideB;
@@ -16,15 +18,20 @@ public class MyTriangle extends Figure {
     private Point pointA;
     private Point pointB;
     private Point pointC;
+    private static final Color DEFAULT_TRIANGLE_COLOR = Color.RED;
+
+    public MyTriangle() {
+        this("triangle" + counterOfFigures);
+    }
 
     public MyTriangle(String name) {
-        super(name);
-        setParameters(DEFAULT_SIDE_VALUE, DEFAULT_SIDE_VALUE, DEFAULT_SIDE_VALUE);
+        this(name, DEFAULT_SIDE_VALUE, DEFAULT_SIDE_VALUE, DEFAULT_SIDE_VALUE);
     }
 
     public MyTriangle(String name, double sideA, double sideB, double sideC) {
         super(name);
         setParameters(sideA, sideB, sideC);
+        setColor(DEFAULT_TRIANGLE_COLOR);
     }
 
     public void setParameters(double a, double b, double c) {
