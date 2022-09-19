@@ -12,6 +12,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/*
+ ⁃ default constructor          | done
+ ⁃ static field counter         | done
+ ⁃ label scene status           | added but have got realized
+ ⁃ default color of each figure | done
+ ⁃ adding on scene algorithm    | in process
+ ⁃ tooltips on buttons          | in process
+ ⁃ new tests                    | in process
+ */
+
 public class MyController implements Initializable {
     private static final String THERE_ARE_NO_FIGURES = "There are no figures added!";
     private static final String TRY_TO_ADD_ANY_FIGURE = "Try to add any figure :)";
@@ -35,6 +45,8 @@ public class MyController implements Initializable {
     private Pane pane;
     @FXML
     private ColorPicker colorPicker;
+    @FXML
+    private Label statusLabel;
 
     public void onAddFigureButtonClicked() {
         String name = nameTextField.getText();
