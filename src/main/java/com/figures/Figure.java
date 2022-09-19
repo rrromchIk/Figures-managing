@@ -41,7 +41,7 @@ public abstract class Figure {
     private Color color;
     public static final double DEFAULT_SIDE_VALUE = 100d;
 
-    protected static int counterOfFigures = 0;
+    protected static int counterOfFigures = 1;
 
     Figure(String name) {
         this.name = name;
