@@ -15,11 +15,11 @@ import java.util.*;
 /*
  ⁃ default constructor          | done
  ⁃ static field counter         | done
- ⁃ label scene status           | added but have got realized
+ ⁃ label scene status           | done
  ⁃ default color of each figure | done
  ⁃ adding on scene algorithm    | in process
- ⁃ tooltips on buttons          | in process
- ⁃ new tests                    | in process
+ ⁃ tooltips on buttons          | done
+ ⁃ new tests                    | done
  */
 
 public class MyController implements Initializable {
@@ -47,6 +47,8 @@ public class MyController implements Initializable {
     private ColorPicker colorPicker;
     @FXML
     private Label statusLabel;
+    @FXML
+    private Label writeToFileStatus;
 
     public void onAddFigureButtonClicked() {
         String name = nameTextField.getText();
@@ -69,6 +71,8 @@ public class MyController implements Initializable {
             }
             displayFigures(figures);
             namesComboBox.getItems().add(name);
+            statusLabel.setText("↑ Scene: All added figures displayed! :)");
+            writeToFileStatus.setText("Write info about figures to the file!");
         } catch (IllegalArgumentException e) {
             showAlert("It looks like something went wrong!", e.getMessage());
         } catch (IndexOutOfBoundsException e) {
@@ -81,6 +85,7 @@ public class MyController implements Initializable {
     public void onWriteToFileButtonCLicked() throws IOException {
         if(!figures.isEmpty()) {
             Figure.writeToFile(figures, "D:\\test.txt");
+            writeToFileStatus.setText("Info wrote to the file: info.txt!");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -89,6 +94,7 @@ public class MyController implements Initializable {
     public void onSortFiguresButtonCLicked() {
         if(!figures.isEmpty()) {
             displayFigures(Figure.sortFiguresByInscribedCircleRadius(figures));
+            statusLabel.setText("↑ Scene: Figures sorted by inscribed circle radius! :)");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -128,6 +134,7 @@ public class MyController implements Initializable {
     public void onDisplayAllButtonClicked() {
         if(!figures.isEmpty()) {
             displayFigures(figures);
+            statusLabel.setText("↑ Scene: All added figures displayed! :)");;
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -139,8 +146,10 @@ public class MyController implements Initializable {
             List<Figure> list = Figure.getFiguresWithAreaGreaterThenGiven(figures, Double.parseDouble(text));
             if(list.isEmpty())
                 showAlert("There are no figures with are greater than " + text, "Try again!");
-            else
+            else {
                 displayFigures(list);
+                statusLabel.setText("↑ Scene: Figures with are greater than: " +  text + "! :)");
+            }
             givenArea.setText("");
         } else {
             showAlert("It looks like something went wrong!", "Enter any area value!");
@@ -168,9 +177,6 @@ public class MyController implements Initializable {
     }
 
     private void displayFigures(List<Figure> figures) {
-        if(figures.isEmpty()) {
-            showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
-        }
         pane.getChildren().forEach(node -> node.setVisible(false));
         double padding = 10;
         final double[] rightMostX = {padding};
