@@ -134,7 +134,7 @@ public class MyController implements Initializable {
     public void onDisplayAllButtonClicked() {
         if(!figures.isEmpty()) {
             displayFigures(figures);
-            statusLabel.setText("↑ Scene: All added figures displayed! :)");;
+            statusLabel.setText("↑ Scene: All added figures displayed! :)");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -183,33 +183,46 @@ public class MyController implements Initializable {
         final double[] downMostY = {padding};
         figures.forEach(figure -> {
             if(figure instanceof MyCircle myCircle) {
-                Circle circle = new Circle(myCircle.getRadius());
-                circle.setCenterX(rightMostX[0] + myCircle.getRadius());
-                circle.setCenterY(downMostY[0] + myCircle.getRadius());
-                circle.setFill(figure.getColor());
-                Tooltip.install(circle, new Tooltip(myCircle.displayInfo()));
-                pane.getChildren().add(circle);
+                drawCircle(rightMostX[0] + myCircle.getRadius(), downMostY[0] + myCircle.getRadius(), myCircle);
                 rightMostX[0] += myCircle.getDiameter() + padding;
             } else if(figure instanceof MySquare mySquare) {
-                Rectangle square = new Rectangle();
-                square.setWidth(mySquare.getSide());
-                square.setHeight(mySquare.getSide());
-                square.setX(rightMostX[0]);
-                square.setY(downMostY[0]);
-                square.setFill(figure.getColor());
-                Tooltip.install(square, new Tooltip(mySquare.displayInfo()));
-                pane.getChildren().add(square);
+                drawSquare(rightMostX[0], downMostY[0], mySquare);
                 rightMostX[0] += mySquare.getSide() + padding;
             } else if(figure instanceof MyTriangle myTriangle) {
-                Polygon triangle = new Polygon();
-                triangle.getPoints().addAll(rightMostX[0], downMostY[0] + myTriangle.getC().getY(),
+                drawTriangle(rightMostX[0], downMostY[0] + myTriangle.getC().getY(),
                         rightMostX[0] + myTriangle.getB().getX(), downMostY[0] + myTriangle.getC().getY(),
-                        rightMostX[0] + myTriangle.getC().getX(), downMostY[0]);
-                triangle.setFill(figure.getColor());
-                Tooltip.install(triangle, new Tooltip(myTriangle.displayInfo()));
-                pane.getChildren().add(triangle);
+                        rightMostX[0] + myTriangle.getC().getX(), downMostY[0], myTriangle);
                 rightMostX[0] += (Math.max(myTriangle.getB().getX(), myTriangle.getC().getX())) + padding;
             }
         });
+    }
+
+    private void drawCircle(double x, double y, MyCircle myCircle) {
+        Circle circle = new Circle(myCircle.getRadius());
+        circle.setCenterX(x);
+        circle.setCenterY(y);
+        circle.setFill(myCircle.getColor());
+        Tooltip.install(circle, new Tooltip(myCircle.displayInfo()));
+        pane.getChildren().add(circle);
+    }
+
+    private void drawSquare(double x, double y, MySquare mySquare) {
+        Rectangle square = new Rectangle();
+        square.setWidth(mySquare.getSide());
+        square.setHeight(mySquare.getSide());
+        square.setX(x);
+        square.setY(y);
+        square.setFill(mySquare.getColor());
+        Tooltip.install(square, new Tooltip(mySquare.displayInfo()));
+        pane.getChildren().add(square);
+    }
+
+    private void drawTriangle(double ax, double ay, double bx, double by, double cx, double cy,
+                               MyTriangle myTriangle) {
+        Polygon triangle = new Polygon();
+        triangle.getPoints().addAll(ax, ay, bx, by, cx, cy);
+        triangle.setFill(myTriangle.getColor());
+        Tooltip.install(triangle, new Tooltip(myTriangle.displayInfo()));
+        pane.getChildren().add(triangle);
     }
 }
