@@ -13,7 +13,7 @@ public class MyApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MyApplication.class.getResource("app-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        Image image = new Image("D:\\проекти Java\\javaFXLearning\\src\\main\\resources\\geometric.png");
+        Image image = new Image("geometric.png");
         stage.getIcons().add(image);
         stage.setTitle("Figures");
         stage.setResizable(true);
