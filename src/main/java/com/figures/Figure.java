@@ -2,29 +2,10 @@ package com.figures;
 
 import javafx.scene.paint.Color;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-
-/*
-    Написати програму для роботи з плоскими фігурами (коло, трикутник, квадрат).
-Необхідно:
-    1)  - відобразити неменше 6 фігур на екрані (вводити фігури за допомогою радіуса у кола, довжини сторони у
-    квадрата та довжини трьох сторін у трикутника)
-        - при наведенні курсору мишки на певну фігуру вивести інформацію про цю фігуру:
-            * коло(назва, площа, довжина, радіус, діаметр)
-            * квадрат(назва, площа, периметр, довжина сторін, радіус вписаного та описаного кола)
-            * трикутник(назва, площа, периметр, довжина сторін, радіус вписаного та описаного кола,
-                                                                            довжина середньої лінії)
-         - реалізувати можливість вивести всю інформацію про фігури у файл.
-    2) Визначити фігуру:
-        - з найбільшою площею
-        - з найменшим периметром (довжиною у випадку кола).
-    3) Методом підрахунку ВІДСОРТУВАТИ значення ВПИСАНОГО кола та вивести у відповідній послідовності назви фігур.
-                                                                                    (у кола вважаєм його радіус)
-    4) За заданим значенням площі відобразити тільки ті фігури, площа яких є більшою.                                                          //if(figure.getArea() > limit) display
-    5) Реалізувати можливість зафарбовування заданої фігури у заданий колір.
-*/
 
 /*
  *
@@ -127,7 +108,7 @@ public abstract class Figure {
         if(!file.exists()) {
             file.createNewFile();
         }
-        try ( FileWriter fWriter = new FileWriter(file, true)) {
+        try (FileWriter fWriter = new FileWriter(file, true)) {
             fWriter.write(start);
             figures.forEach(figure -> {
                 try {
@@ -139,9 +120,33 @@ public abstract class Figure {
             fWriter.write(end);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
         return true;
+    }
+
+    public static List<Figure> readFiguresFromFile(String uri) {
+        File file = new File(uri);
+        List<Figure> list = new ArrayList<>();
+        if(file.exists()) {
+            try (Scanner reader = new Scanner(new FileReader(file))) {
+                addToList(reader, list);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else
+            throw new IllegalArgumentException();
+        return list;
+    }
+
+    private static void addToList(Scanner reader, List<Figure> list) {
+        while (reader.hasNext()) {
+            switch (reader.next()) {
+                case "triangle" -> list.add(new MyTriangle(reader.next(), Double.parseDouble(reader.next()),
+                        Double.parseDouble(reader.next()), Double.parseDouble(reader.next())));
+                case "circle" -> list.add(new MyCircle(reader.next(), Double.parseDouble(reader.next())));
+                case "square" -> list.add(new MySquare(reader.next(), Double.parseDouble(reader.next())));
+            }
+        }
     }
 
     @Override
