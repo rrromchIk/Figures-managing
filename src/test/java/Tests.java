@@ -179,6 +179,15 @@ public class Tests {
         triangle2.setColor(Color.BLACK);
         assertEquals(Color.BLACK, triangle2.getColor());
     }
+
+    @Test
+    public void testReadFromFile() {
+        assertThrows(NoSuchElementException.class,
+                () -> Figure.readFiguresFromFile("src\\main\\resources\\testFile1.txt"));
+        assertThrows(IllegalArgumentException.class, () -> Figure.readFiguresFromFile(""));
+        assertFalse(Figure.readFiguresFromFile("src\\main\\resources\\testFile2.txt").isEmpty());
+        Figure.readFiguresFromFile("src\\main\\resources\\testFile2.txt").forEach(System.out::println);
+    }
 }
 
 
