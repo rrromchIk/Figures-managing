@@ -84,7 +84,7 @@ public class MyController implements Initializable {
 
     public void onWriteToFileButtonCLicked() throws IOException {
         if(!figures.isEmpty()) {
-            Figure.writeToFile(figures, "D:\\test.txt");
+            Figure.writeToFile(figures, "src\\main\\resources\\info.txt");
             writeToFileStatus.setText("Info wrote to the file: info.txt!");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
