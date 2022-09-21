@@ -1,11 +1,8 @@
 import com.figures.*;
-
 import java.io.IOException;
 import java.util.*;
-
 import javafx.scene.paint.Color;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class Tests {
@@ -20,7 +17,7 @@ public class Tests {
             figures.add(new MySquare("square2", 75));
             figures.add(new MyCircle("circle2", 80));
         } catch (IllegalArgumentException e) {
-            System.out.println("Bad sides!!!");
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -32,7 +29,7 @@ public class Tests {
         assertEquals("square2",  Figure.getMinPerimeterFigure(figures).getName());
         System.out.println("after sorting");
         Figure.sortFiguresByInscribedCircleRadius(figures).forEach(System.out::println);
-        assertTrue(Figure.writeToFile(figures,"D:\\text.txt"));
+        assertTrue(Figure.writeToFile(figures,"src\\main\\resources\\info.txt"));
     }
 
     @Test
@@ -41,7 +38,7 @@ public class Tests {
         MyCircle circle2 = new MyCircle("circle1", 20d);
         MyCircle circle = new MyCircle();
 
-        assertEquals("circle14", circle.getName());
+        assertEquals("circle21", circle.getName());
         assertEquals(Math.PI * Math.pow(Figure.DEFAULT_SIDE_VALUE, 2), circle.getArea(), 0.01);
         assertEquals(2 * Math.PI * Figure.DEFAULT_SIDE_VALUE, circle.getPerimeter(), 0.01);
         assertEquals(Figure.DEFAULT_SIDE_VALUE, circle.getRadius(), 0.01);
@@ -89,7 +86,7 @@ public class Tests {
         MySquare square2 = new MySquare("square1", 50);
 
 
-        assertEquals("square16", square.getName());
+        assertEquals("square23", square.getName());
         assertEquals(Math.pow(Figure.DEFAULT_SIDE_VALUE, 2), square.getArea(), 0.01);
         assertEquals(4* Figure.DEFAULT_SIDE_VALUE, square.getPerimeter(), 0.01);
         assertEquals(Figure.DEFAULT_SIDE_VALUE, square.getSide(), 0.01);
