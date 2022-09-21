@@ -156,6 +156,18 @@ public class MyController implements Initializable {
         }
     }
 
+    public void onReadFromFileButtonClicked() {
+        try {
+            figures.addAll(Figure.readFiguresFromFile("src\\main\\resources\\inputData.txt"));
+            displayFigures(figures);
+            figures.forEach(figure -> namesComboBox.getItems().add(figure.getName()));
+            statusLabel.setText("↑ Scene: All added figures displayed! :)");
+            writeToFileStatus.setText("Write info about figures to the file!");
+        } catch (NoSuchElementException e) {
+            showAlert("Bad input format!", "Change input data format and try again!");
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         figuresComboBox.getItems().addAll("Circle", "Square", "Triangle");

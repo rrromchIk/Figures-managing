@@ -47,14 +47,15 @@
                <tooltip>
                   <Tooltip text="Choose figure from list" />
                </tooltip></ComboBox>
-            <TextField fx:id="nameTextField" prefHeight="30.0" prefWidth="149.0" promptText="&quot;name&quot;">
+            <TextField fx:id="nameTextField" prefHeight="30.0" prefWidth="114.0" promptText="&quot;name&quot;">
                <tooltip>
                   <Tooltip text="Enter name of figure" />
                </tooltip></TextField>
-            <TextField fx:id="sizeTextField" prefHeight="30.0" prefWidth="126.0" promptText="size">
+            <TextField fx:id="sizeTextField" prefHeight="30.0" prefWidth="97.0" promptText="size">
                <tooltip>
                   <Tooltip text="Enter size of figure" />
                </tooltip></TextField>
+            <Button fx:id="readFromFile" mnemonicParsing="false" onAction="#onReadFromFileButtonClicked" prefHeight="30.0" text="Read file" />
             <Button fx:id="displayAll" mnemonicParsing="false" onAction="#onDisplayAllButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Display ">
                <tooltip>
                   <Tooltip text="Press to display all figures" />

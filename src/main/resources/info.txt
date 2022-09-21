@@ -8,3 +8,111 @@ Diameter: 160,00
 
 --------------------------------- End --------------------------------
 
+----------------------------- New adding -----------------------------
+
+Name: cr
+Area: 19606,68
+Perimeter: 496,37
+Radius: 79,00
+Diameter: 158,00
+
+--------------------------------- End --------------------------------
+
+----------------------------- New adding -----------------------------
+
+Name: cr
+Area: 19606,68
+Perimeter: 496,37
+Radius: 79,00
+Diameter: 158,00
+
+Name: sq
+Area: 10000,00
+Perimeter: 400,00
+Sides: 100,00
+Inscribed circle radius: 50,00
+Circumscribed circle radius: 70,71
+
+--------------------------------- End --------------------------------
+
+----------------------------- New adding -----------------------------
+
+Name: cr
+Area: 19606,68
+Perimeter: 496,37
+Radius: 79,00
+Diameter: 158,00
+
+Name: sq
+Area: 10000,00
+Perimeter: 400,00
+Sides: 100,00
+Inscribed circle radius: 50,00
+Circumscribed circle radius: 70,71
+
+Name: tr
+Area: 4999,91
+Perimeter: 341,00
+Side A: 100,00
+Side B: 100,00
+Side C: 141,00
+Inscribed circle radius: 29,32
+Circumscribed circle radius: 70,50
+Median: 111,536989
+
+--------------------------------- End --------------------------------
+
+----------------------------- New adding -----------------------------
+
+Name: cr
+Area: 1256,64
+Perimeter: 125,66
+Radius: 20,00
+Diameter: 40,00
+
+Name: tr1
+Area: 29047,38
+Perimeter: 900,00
+Side A: 200,00
+Side B: 300,00
+Side C: 400,00
+Inscribed circle radius: 64,55
+Circumscribed circle radius: 206,56
+Median: 339,116499
+
+Name: sq2
+Area: 10000,00
+Perimeter: 400,00
+Sides: 100,00
+Inscribed circle radius: 50,00
+Circumscribed circle radius: 70,71
+
+--------------------------------- End --------------------------------
+
+----------------------------- New adding -----------------------------
+
+Name: cr
+Area: 1256,64
+Perimeter: 125,66
+Radius: 20,00
+Diameter: 40,00
+
+Name: tr1
+Area: 29047,38
+Perimeter: 900,00
+Side A: 200,00
+Side B: 300,00
+Side C: 400,00
+Inscribed circle radius: 64,55
+Circumscribed circle radius: 206,56
+Median: 339,116499
+
+Name: sq2
+Area: 10000,00
+Perimeter: 400,00
+Sides: 100,00
+Inscribed circle radius: 50,00
+Circumscribed circle radius: 70,71
+
+--------------------------------- End --------------------------------
+
