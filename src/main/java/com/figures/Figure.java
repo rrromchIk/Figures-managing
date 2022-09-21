@@ -1,10 +1,7 @@
 package com.figures;
 
 import javafx.scene.paint.Color;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /*
