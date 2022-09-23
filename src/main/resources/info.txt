@@ -116,3 +116,103 @@ Circumscribed circle radius: 70,71
 
 --------------------------------- End --------------------------------
 
+----------------------------- New adding -----------------------------
+
+Name: circle1
+Area: 7853,98
+Perimeter: 314,16
+Radius: 50,00
+Diameter: 100,00
+
+Name: square1
+Area: 10000,00
+Perimeter: 400,00
+Sides: 100,00
+Inscribed circle radius: 50,00
+Circumscribed circle radius: 70,71
+
+Name: triangle1
+Area: 60000,00
+Perimeter: 1200,00
+Side A: 300,00
+Side B: 400,00
+Side C: 500,00
+Inscribed circle radius: 100,00
+Circumscribed circle radius: 250,00
+Median: 427,200187
+
+Name: triangle2
+Area: 2455,09
+Perimeter: 801,00
+Side A: 400,00
+Side B: 101,00
+Side C: 300,00
+Inscribed circle radius: 6,13
+Circumscribed circle radius: 1234,17
+Median: 100,501244
+
+Name: square2
+Area: 5625,00
+Perimeter: 300,00
+Sides: 75,00
+Inscribed circle radius: 37,50
+Circumscribed circle radius: 53,03
+
+Name: circle2
+Area: 20106,19
+Perimeter: 502,65
+Radius: 80,00
+Diameter: 160,00
+
+--------------------------------- End --------------------------------
+
+----------------------------- New adding -----------------------------
+
+Name: circle1
+Area: 7853,98
+Perimeter: 314,16
+Radius: 50,00
+Diameter: 100,00
+
+Name: square1
+Area: 10000,00
+Perimeter: 400,00
+Sides: 100,00
+Inscribed circle radius: 50,00
+Circumscribed circle radius: 70,71
+
+Name: triangle1
+Area: 60000,00
+Perimeter: 1200,00
+Side A: 300,00
+Side B: 400,00
+Side C: 500,00
+Inscribed circle radius: 100,00
+Circumscribed circle radius: 250,00
+Median: 427,200187
+
+Name: triangle2
+Area: 2455,09
+Perimeter: 801,00
+Side A: 400,00
+Side B: 101,00
+Side C: 300,00
+Inscribed circle radius: 6,13
+Circumscribed circle radius: 1234,17
+Median: 100,501244
+
+Name: square2
+Area: 5625,00
+Perimeter: 300,00
+Sides: 75,00
+Inscribed circle radius: 37,50
+Circumscribed circle radius: 53,03
+
+Name: circle2
+Area: 20106,19
+Perimeter: 502,65
+Radius: 80,00
+Diameter: 160,00
+
+--------------------------------- End --------------------------------
+

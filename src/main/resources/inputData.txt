@@ -1,3 +1,3 @@
-circle cr 20
-triangle tr1 200 300 400
+circle cr 80
+triangle tr1 150 141 200
 square sq2 100
