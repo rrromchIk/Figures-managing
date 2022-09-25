@@ -76,17 +76,13 @@ public abstract class Figure {
     }
 
     public static Figure getMaxAreaFigure(List<Figure> figures) {
-        Comparator<Figure> c = (f1, f2) -> (int)(f2.getArea() - f1.getArea());
-        Optional<Figure> opt = figures.stream()
-                                        .reduce((f1, f2) -> c.compare(f1, f2) <= 0 ? f1 : f2);
-        return opt.orElse(null);
+        return figures.stream()
+                .max(Comparator.comparing(Figure::getArea)).orElse(null);
     }
 
     public static Figure getMinPerimeterFigure(List<Figure> figures) {
-        Comparator<Figure> c = (f1, f2) -> (int)(f1.getPerimeter() - f2.getPerimeter());
-        Optional<Figure> opt = figures.stream()
-                                        .reduce((f1, f2) -> c.compare(f1, f2) <= 0 ? f1 : f2);
-        return opt.orElse(null);
+        return figures.stream()
+                .min(Comparator.comparing(Figure::getPerimeter)).orElse(null);
     }
 
     public static List<Figure> getFiguresWithAreaGreaterThenGiven(List<Figure> figures, double area) {
@@ -97,7 +93,7 @@ public abstract class Figure {
 
     public static List<Figure> sortFiguresByInscribedCircleRadius(List<Figure> figures) {
         return figures.stream()
-                .sorted((f1, f2) -> (int)(f1.inscribedCircleRadius - f2.inscribedCircleRadius))
+                .sorted(Comparator.comparing(Figure::getInscribedCircleRadius))
                 .toList();
     }
 
