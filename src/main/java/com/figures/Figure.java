@@ -3,6 +3,7 @@ package com.figures;
 import javafx.scene.paint.Color;
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
  *
@@ -75,27 +76,29 @@ public abstract class Figure {
     }
 
     public static Figure getMaxAreaFigure(List<Figure> figures) {
-        List<Figure>  list = new ArrayList<>(figures);
-        list.sort((f1, f2) -> (int)(f2.getArea() - f1.getArea()));
-        return list.get(0);
+        Comparator<Figure> c = (f1, f2) -> (int)(f2.getArea() - f1.getArea());
+        Optional<Figure> opt = figures.stream()
+                                        .reduce((f1, f2) -> c.compare(f1, f2) <= 0 ? f1 : f2);
+        return opt.orElse(null);
     }
 
     public static Figure getMinPerimeterFigure(List<Figure> figures) {
-        List<Figure>  list = new ArrayList<>(figures);
-        list.sort((f1, f2) -> (int)(f1.getPerimeter() - f2.getPerimeter()));
-        return list.get(0);
+        Comparator<Figure> c = (f1, f2) -> (int)(f1.getPerimeter() - f2.getPerimeter());
+        Optional<Figure> opt = figures.stream()
+                                        .reduce((f1, f2) -> c.compare(f1, f2) <= 0 ? f1 : f2);
+        return opt.orElse(null);
     }
 
     public static List<Figure> getFiguresWithAreaGreaterThenGiven(List<Figure> figures, double area) {
-        List<Figure> figuresWithGreaterArea = new ArrayList<>();
-        figures.forEach(figure -> {if(figure.area > area) figuresWithGreaterArea.add(figure);});
-        return figuresWithGreaterArea;
+        return figures.stream()
+                .filter(f -> f.area > area)
+                .toList();
     }
 
     public static List<Figure> sortFiguresByInscribedCircleRadius(List<Figure> figures) {
-        List<Figure> list = new ArrayList<>(figures);
-        list.sort((f1, f2) -> (int)(f1.inscribedCircleRadius - f2.inscribedCircleRadius));
-        return list;
+        return figures.stream()
+                .sorted((f1, f2) -> (int)(f1.inscribedCircleRadius - f2.inscribedCircleRadius))
+                .toList();
     }
 
     public static boolean writeToFile(List<Figure> figures, String url) throws IOException {
