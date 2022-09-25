@@ -98,7 +98,7 @@ public class MyTriangle extends Figure {
     @Override
     public String displayInfo() {
         return super.displayInfo() + String.format("Side A: %.2f%nSide B: %.2f%nSide C: %.2f%n" +
-                        "Inscribed circle radius: %.2f%nCircumscribed circle radius: %.2f%nMedian: %f%n%n", sideA,
+                        "Inscribed circle radius: %.2f%nCircumscribed circle radius: %.2f%nMedian: %.2f%n%n", sideA,
                 sideB, sideC, getInscribedCircleRadius(), getCircumscribedCircleRadius(), midLine);
     }
 
