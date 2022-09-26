@@ -190,23 +190,55 @@ public class MyController implements Initializable {
 
     private void displayFigures(List<Figure> figures) {
         pane.getChildren().forEach(node -> node.setVisible(false));
-        double padding = 10;
-        final double[] rightMostX = {padding};
-        final double[] downMostY = {padding};
-        figures.forEach(figure -> {
+        double padding = 10d;
+        double currentXPos = padding, currentYPos = padding, nextXPos = 0, nextYPos = 0;
+        double lowerYBound = 0;
+        for(Figure figure : figures) {
             if(figure instanceof MyCircle myCircle) {
-                drawCircle(rightMostX[0] + myCircle.getRadius(), downMostY[0] + myCircle.getRadius(), myCircle);
-                rightMostX[0] += myCircle.getDiameter() + padding;
+                double diameter = myCircle.getDiameter();
+                while (true) {
+                    if(currentXPos + diameter + padding <= pane.getWidth()) {
+                        if(currentYPos + diameter + padding <= pane.getHeight()) {
+                            double radius = myCircle.getRadius();
+                            drawCircle(currentXPos + radius, currentYPos + radius, myCircle);
+                            currentXPos += diameter + padding;
+                            lowerYBound = Math.max(currentYPos + diameter, lowerYBound);
+                            break;
+                        } else {
+                            showAlert("Ups..", "No more space!");
+                            return;
+                        }
+                    } else {
+                        currentXPos = padding;
+                        currentYPos = lowerYBound + padding;
+                    }
+                }
             } else if(figure instanceof MySquare mySquare) {
-                drawSquare(rightMostX[0], downMostY[0], mySquare);
-                rightMostX[0] += mySquare.getSide() + padding;
+                double side = mySquare.getSide();
+                while (true) {
+                    if(currentXPos + side + padding <= pane.getWidth()) {
+                        if(currentYPos + side + padding <= pane.getHeight()) {
+                            drawSquare(currentXPos, currentYPos, mySquare);
+                            currentXPos += side + padding;
+                            lowerYBound = Math.max(currentYPos + side, lowerYBound);
+                            break;
+                        } else {
+                            showAlert("Ups..", "No more space!");
+                            return;
+                        }
+                    } else {
+                        currentXPos = padding;
+                        currentYPos = lowerYBound + padding;
+                    }
+                }
             } else if(figure instanceof MyTriangle myTriangle) {
-                drawTriangle(rightMostX[0], downMostY[0] + myTriangle.getC().getY(),
-                        rightMostX[0] + myTriangle.getB().getX(), downMostY[0] + myTriangle.getC().getY(),
-                        rightMostX[0] + myTriangle.getC().getX(), downMostY[0], myTriangle);
-                rightMostX[0] += (Math.max(myTriangle.getB().getX(), myTriangle.getC().getX())) + padding;
+                drawTriangle(currentXPos, currentYPos + myTriangle.getC().getY(),
+                        currentXPos + myTriangle.getB().getX(), currentYPos + myTriangle.getC().getY(),
+                        currentXPos + myTriangle.getC().getX(), currentYPos, myTriangle);
+                currentXPos += (Math.max(myTriangle.getB().getX(), myTriangle.getC().getX())) + padding;
+                lowerYBound = Math.max(lowerYBound, myTriangle.getB().getY());
             }
-        });
+        }
     }
 
     private void drawCircle(double x, double y, MyCircle myCircle) {
