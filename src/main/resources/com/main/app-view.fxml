@@ -18,7 +18,7 @@
       <Pane fx:id="pane" prefHeight="552.0" prefWidth="882.0" />
       <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label fx:id="statusLabel" prefHeight="16.0" prefWidth="448.0" text="↑ Scene: Is empty">
+            <Label fx:id="sceneStatus" prefHeight="16.0" prefWidth="448.0" text="↑ Scene: Is empty">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
@@ -60,6 +60,11 @@
                <tooltip>
                   <Tooltip text="Press to display all figures" />
                </tooltip></Button>
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClearSceneButtonClicked" prefWidth="70.0" text="Clear">
+               <tooltip>
+                  <Tooltip text="Press to clear the scene" />
+               </tooltip>
+            </Button>
          </children>
          <opaqueInsets>
             <Insets />
@@ -68,7 +73,7 @@
             <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
          <children>
             <Button fx:id="maxAreaButton" mnemonicParsing="false" onAction="#onMaxAreaFigureButtonClicked" prefHeight="30.0" text="Max S">
                <tooltip>
@@ -93,7 +98,7 @@
             <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
          <children>
             <Button fx:id="fillButton" mnemonicParsing="false" onAction="#onFillButtonClicked" prefHeight="30.0" text="Fill">
                <tooltip>
@@ -114,7 +119,7 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding></HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
          <children>
             <Button fx:id="greaterThan" mnemonicParsing="false" onAction="#onGreaterThanButtonClicked" prefHeight="30.0" text="Greater than">
                <tooltip>
