@@ -3,7 +3,6 @@ package com.figures;
 import javafx.scene.paint.Color;
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /*
  *
