@@ -1,13 +1,11 @@
 package com.main;
 
 import com.figures.*;
+import com.util.Painter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -46,7 +44,7 @@ public class MyController implements Initializable {
     @FXML
     private ColorPicker colorPicker;
     @FXML
-    private Label statusLabel;
+    private Label sceneStatus;
     @FXML
     private Label writeToFileStatus;
 
@@ -71,8 +69,8 @@ public class MyController implements Initializable {
             }
             displayFigures(figures);
             namesComboBox.getItems().add(name);
-            statusLabel.setText("↑ Scene: All added figures displayed! :)");
-            writeToFileStatus.setText("Write info about figures to the file!");
+            updateSceneStatus("↑ Scene: All added figures displayed! :)");
+            updateWriteToFileStatus("Write info about figures to the file!");
         } catch (IllegalArgumentException e) {
             showAlert("It looks like something went wrong!", e.getMessage());
         } catch (IndexOutOfBoundsException e) {
@@ -85,7 +83,7 @@ public class MyController implements Initializable {
     public void onWriteToFileButtonCLicked() throws IOException {
         if(!figures.isEmpty()) {
             Figure.writeToFile(figures, "src\\main\\resources\\info.txt");
-            writeToFileStatus.setText("Info wrote to the file: info.txt!");
+            updateWriteToFileStatus("Info wrote to the file: info.txt!");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -94,7 +92,7 @@ public class MyController implements Initializable {
     public void onSortFiguresButtonCLicked() {
         if(!figures.isEmpty()) {
             displayFigures(Figure.sortFiguresByInscribedCircleRadius(figures));
-            statusLabel.setText("↑ Scene: Figures sorted by inscribed circle radius! :)");
+            updateSceneStatus("↑ Scene: Figures sorted by inscribed circle radius! :)");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -120,11 +118,9 @@ public class MyController implements Initializable {
 
     public void onFillButtonClicked() {
         if(namesComboBox.getValue() != null) {
-            figures.forEach(figure -> {
-                if (figure.getName().equals(namesComboBox.getValue())) {
-                    figure.setColor(colorPicker.getValue());
-                }
-            });
+            figures.stream()
+                            .filter(figure -> figure.getName().equals(namesComboBox.getValue()))
+                                    .forEach(figure -> figure.setColor(colorPicker.getValue()));
             displayFigures(figures);
         } else {
             showAlert("Choose figure name!", "If there are no names, " + TRY_TO_ADD_ANY_FIGURE);
@@ -134,10 +130,20 @@ public class MyController implements Initializable {
     public void onDisplayAllButtonClicked() {
         if(!figures.isEmpty()) {
             displayFigures(figures);
-            statusLabel.setText("↑ Scene: All added figures displayed! :)");
+            updateSceneStatus("↑ Scene: All added figures displayed! :)");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
+    }
+
+    public void onClearSceneButtonClicked() {
+        figures.clear();
+        Painter.clearScene(pane);
+        clearTextFields();
+        namesComboBox.getItems().clear();
+        namesComboBox.setPromptText("Name of figure");
+        updateSceneStatus("↑ Scene: Cleaned)");
+        updateWriteToFileStatus("");
     }
 
     public void onGreaterThanButtonClicked() {
@@ -148,7 +154,7 @@ public class MyController implements Initializable {
                 showAlert("There are no figures with are greater than " + text, "Try again!");
             else {
                 displayFigures(list);
-                statusLabel.setText("↑ Scene: Figures with are greater than: " +  text + "! :)");
+                updateSceneStatus("↑ Scene: Figures with are greater than: " +  text + "! :)");
             }
             givenArea.setText("");
         } else {
@@ -161,8 +167,8 @@ public class MyController implements Initializable {
             figures.addAll(Figure.readFiguresFromFile("src\\main\\resources\\inputData.txt"));
             displayFigures(figures);
             figures.forEach(figure -> namesComboBox.getItems().add(figure.getName()));
-            statusLabel.setText("↑ Scene: All added figures displayed! :)");
-            writeToFileStatus.setText("Write info about figures to the file!");
+            updateSceneStatus("↑ Scene: All added figures displayed! :)");
+            updateWriteToFileStatus("Write info about figures to the file!");
         } catch (RuntimeException e) {
             showAlert("Bad input format!", "Change input data format and try again!");
         }
@@ -189,84 +195,20 @@ public class MyController implements Initializable {
     }
 
     private void displayFigures(List<Figure> figures) {
-        pane.getChildren().forEach(node -> node.setVisible(false));
-        double padding = 10d;
-        double currentXPos = padding, currentYPos = padding, nextXPos = 0, nextYPos = 0;
-        double lowerYBound = 0;
-        for(Figure figure : figures) {
-            if(figure instanceof MyCircle myCircle) {
-                double diameter = myCircle.getDiameter();
-                while (true) {
-                    if(currentXPos + diameter + padding <= pane.getWidth()) {
-                        if(currentYPos + diameter + padding <= pane.getHeight()) {
-                            double radius = myCircle.getRadius();
-                            drawCircle(currentXPos + radius, currentYPos + radius, myCircle);
-                            currentXPos += diameter + padding;
-                            lowerYBound = Math.max(currentYPos + diameter, lowerYBound);
-                            break;
-                        } else {
-                            showAlert("Ups..", "No more space!");
-                            return;
-                        }
-                    } else {
-                        currentXPos = padding;
-                        currentYPos = lowerYBound + padding;
-                    }
-                }
-            } else if(figure instanceof MySquare mySquare) {
-                double side = mySquare.getSide();
-                while (true) {
-                    if(currentXPos + side + padding <= pane.getWidth()) {
-                        if(currentYPos + side + padding <= pane.getHeight()) {
-                            drawSquare(currentXPos, currentYPos, mySquare);
-                            currentXPos += side + padding;
-                            lowerYBound = Math.max(currentYPos + side, lowerYBound);
-                            break;
-                        } else {
-                            showAlert("Ups..", "No more space!");
-                            return;
-                        }
-                    } else {
-                        currentXPos = padding;
-                        currentYPos = lowerYBound + padding;
-                    }
-                }
-            } else if(figure instanceof MyTriangle myTriangle) {
-                drawTriangle(currentXPos, currentYPos + myTriangle.getC().getY(),
-                        currentXPos + myTriangle.getB().getX(), currentYPos + myTriangle.getC().getY(),
-                        currentXPos + myTriangle.getC().getX(), currentYPos, myTriangle);
-                currentXPos += (Math.max(myTriangle.getB().getX(), myTriangle.getC().getX())) + padding;
-                lowerYBound = Math.max(lowerYBound, myTriangle.getB().getY());
-            }
+        try {
+            Painter painter = new Painter(pane, figures);
+            painter.draw();
+        } catch (Exception e) {
+            showAlert("Ups...", "No more space!\n" +
+                    "Try to increase your window or delete current figures!");
         }
     }
 
-    private void drawCircle(double x, double y, MyCircle myCircle) {
-        Circle circle = new Circle(myCircle.getRadius());
-        circle.setCenterX(x);
-        circle.setCenterY(y);
-        circle.setFill(myCircle.getColor());
-        Tooltip.install(circle, new Tooltip(myCircle.displayInfo()));
-        pane.getChildren().add(circle);
+    private void updateSceneStatus(String text) {
+        sceneStatus.setText(text);
     }
 
-    private void drawSquare(double x, double y, MySquare mySquare) {
-        Rectangle square = new Rectangle();
-        square.setWidth(mySquare.getSide());
-        square.setHeight(mySquare.getSide());
-        square.setX(x);
-        square.setY(y);
-        square.setFill(mySquare.getColor());
-        Tooltip.install(square, new Tooltip(mySquare.displayInfo()));
-        pane.getChildren().add(square);
-    }
-
-    private void drawTriangle(double ax, double ay, double bx, double by, double cx, double cy,
-                               MyTriangle myTriangle) {
-        Polygon triangle = new Polygon();
-        triangle.getPoints().addAll(ax, ay, bx, by, cx, cy);
-        triangle.setFill(myTriangle.getColor());
-        Tooltip.install(triangle, new Tooltip(myTriangle.displayInfo()));
-        pane.getChildren().add(triangle);
+    private void updateWriteToFileStatus(String text) {
+        writeToFileStatus.setText(text);
     }
 }
