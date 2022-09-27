@@ -11,18 +11,17 @@ import java.net.URL;
 import java.util.*;
 
 /*
- ⁃ default constructor          | done
- ⁃ static field counter         | done
- ⁃ label scene status           | done
- ⁃ default color of each figure | done
- ⁃ adding on scene algorithm    | in process
- ⁃ tooltips on buttons          | done
- ⁃ new tests                    | done
+ ⁃ adding on scene algorithm        | in process
+ - fix bug with display and status
+ - make display return boolean
+ - funct decomposition - make add figure to list and display
+ - add to list and display
  */
 
 public class MyController implements Initializable {
     private static final String THERE_ARE_NO_FIGURES = "There are no figures added!";
     private static final String TRY_TO_ADD_ANY_FIGURE = "Try to add any figure :)";
+    private static final String ALL_ADDED_FIGURES_DISPLAYED = "↑ Scene: All added figures displayed! :)";
     private final List<Figure> figures = new ArrayList<>();
 
     @FXML
@@ -52,32 +51,52 @@ public class MyController implements Initializable {
         String name = nameTextField.getText();
         String size = sizeTextField.getText();
         try {
-            if (figuresComboBox.getValue() == null)
-                throw new IllegalArgumentException("Choose figure!!!");
-            if(size.isEmpty() || name.isEmpty()) {
-                throw new IllegalArgumentException("Fill all text fields!!!");
-            }
-
+            validateInput();
             switch (figuresComboBox.getValue()) {
-                case "Circle" ->  figures.add(new MyCircle(name, Double.parseDouble(size)));
-                case "Square" -> figures.add(new MySquare(name, Double.parseDouble(size)));
+                case "Circle" ->  addToListAndDisplay(new MyCircle(name, Double.parseDouble(size)));
+                case "Square" -> addToListAndDisplay(new MySquare(name, Double.parseDouble(size)));
                 case "Triangle" -> {
                     String[] sides = size.split(" ");
-                    figures.add(new MyTriangle(name, Double.parseDouble(sides[0]), Double.parseDouble(sides[1]),
+                    addToListAndDisplay(new MyTriangle(name, Double.parseDouble(sides[0]), Double.parseDouble(sides[1]),
                             Double.parseDouble(sides[2])));
                 }
             }
-            displayFigures(figures);
-            namesComboBox.getItems().add(name);
-            updateSceneStatus("↑ Scene: All added figures displayed! :)");
-            updateWriteToFileStatus("Write info about figures to the file!");
         } catch (IllegalArgumentException e) {
             showAlert("It looks like something went wrong!", e.getMessage());
         } catch (IndexOutOfBoundsException e) {
             showAlert("Bad input", "Write tree side sizes for triangle!");
         }
-
         clearTextFields();
+    }
+
+    private void validateInput() {
+        String name = nameTextField.getText();
+        String size = sizeTextField.getText();
+
+        if (figuresComboBox.getValue() == null)
+            throw new IllegalArgumentException("Choose figure!!!");
+        if(size.isEmpty() || name.isEmpty()) {
+            throw new IllegalArgumentException("Fill all text fields!!!");
+        }
+    }
+
+    public void onReadFromFileButtonClicked() {
+        try {
+            List<Figure> list = Figure.readFiguresFromFile("src\\main\\resources\\inputData.txt");
+            list.forEach(this::addToListAndDisplay);
+        } catch (RuntimeException e) {
+            showAlert("Bad input format!", "Change input data format and try again!");
+        }
+    }
+
+    private void addToListAndDisplay(Figure figure) {
+        figures.add(figure);
+        if (displayFigures(figures)) {
+            namesComboBox.getItems().add(figure.getName());
+            updateSceneStatus(ALL_ADDED_FIGURES_DISPLAYED);
+            updateWriteToFileStatus("Write info about figures to the file!");
+        } else
+            figures.remove(figure);
     }
 
     public void onWriteToFileButtonCLicked() throws IOException {
@@ -130,7 +149,7 @@ public class MyController implements Initializable {
     public void onDisplayAllButtonClicked() {
         if(!figures.isEmpty()) {
             displayFigures(figures);
-            updateSceneStatus("↑ Scene: All added figures displayed! :)");
+            updateSceneStatus(ALL_ADDED_FIGURES_DISPLAYED);
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -162,18 +181,6 @@ public class MyController implements Initializable {
         }
     }
 
-    public void onReadFromFileButtonClicked() {
-        try {
-            figures.addAll(Figure.readFiguresFromFile("src\\main\\resources\\inputData.txt"));
-            displayFigures(figures);
-            figures.forEach(figure -> namesComboBox.getItems().add(figure.getName()));
-            updateSceneStatus("↑ Scene: All added figures displayed! :)");
-            updateWriteToFileStatus("Write info about figures to the file!");
-        } catch (RuntimeException e) {
-            showAlert("Bad input format!", "Change input data format and try again!");
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         figuresComboBox.getItems().addAll("Circle", "Square", "Triangle");
@@ -194,13 +201,14 @@ public class MyController implements Initializable {
         alert.showAndWait();
     }
 
-    private void displayFigures(List<Figure> figures) {
+    private boolean displayFigures(List<Figure> figures) {
         try {
             Painter painter = new Painter(pane, figures);
             painter.draw();
-        } catch (Exception e) {
-            showAlert("Ups...", "No more space!\n" +
-                    "Try to increase your window or delete current figures!");
+            return true; //---------
+        } catch (IllegalStateException e) {
+            showAlert("Ups...", e.getMessage());
+            return false; //--------
         }
     }
 
