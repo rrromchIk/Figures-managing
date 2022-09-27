@@ -1,0 +1,33 @@
+----------------------------- New adding -----------------------------
+
+Name: cr
+Area: 11309,73
+Perimeter: 376,99
+Radius: 60,00
+Diameter: 120,00
+
+Name: cr
+Area: 20106,19
+Perimeter: 502,65
+Radius: 80,00
+Diameter: 160,00
+
+Name: tr
+Area: 10558,23
+Perimeter: 491,00
+Side A: 150,00
+Side B: 141,00
+Side C: 200,00
+Inscribed circle radius: 43,01
+Circumscribed circle radius: 100,16
+Median: 155,93
+
+Name: sq2
+Area: 10000,00
+Perimeter: 400,00
+Sides: 100,00
+Inscribed circle radius: 50,00
+Circumscribed circle radius: 70,71
+
+--------------------------------- End --------------------------------
+

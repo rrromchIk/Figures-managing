@@ -10,13 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-/*
- ⁃ adding on scene algorithm        | in process
- - fix bug with display and status
- - make display return boolean
- - funct decomposition - make add figure to list and display
- - add to list and display
- */
+// ⁃ adding on scene algorithm  | in process
 
 public class MyController implements Initializable {
     private static final String THERE_ARE_NO_FIGURES = "There are no figures added!";
@@ -101,8 +95,8 @@ public class MyController implements Initializable {
 
     public void onWriteToFileButtonCLicked() throws IOException {
         if(!figures.isEmpty()) {
-            Figure.writeToFile(figures, "src\\main\\resources\\info.txt");
-            updateWriteToFileStatus("Info wrote to the file: info.txt!");
+            Figure.writeToFile(figures, "src\\main\\resources\\outputData.txt");
+            updateWriteToFileStatus("Info wrote to the file: outputData.txt!");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }

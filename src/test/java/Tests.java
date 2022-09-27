@@ -29,7 +29,7 @@ public class Tests {
         assertEquals("square2",  Figure.getMinPerimeterFigure(figures).getName());
         System.out.println("after sorting");
         Figure.sortFiguresByInscribedCircleRadius(figures).forEach(System.out::println);
-        assertTrue(Figure.writeToFile(figures,"src\\main\\resources\\info.txt"));
+        assertTrue(Figure.writeToFile(figures,"src\\main\\resources\\outputData.txt"));
     }
 
     @Test
