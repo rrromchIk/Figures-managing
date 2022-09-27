@@ -10,8 +10,14 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 
 public class Painter {
-    private List<Figure> figures;
-    private Pane pane;
+    private final List<Figure> figures;
+    private final Pane pane;
+    private static final int PADDING = 10;
+    private static final String EXCEPTION_MESSAGE = "No more space!\nTry to increase your window size " +
+                                                    "or delete current figures!";
+    private double currentXPos = PADDING;
+    private double currentYPos = PADDING;
+    private double lowerYBound = 0;
 
     public Painter(Pane pane, List<Figure> list) {
         this.pane = pane;
@@ -20,53 +26,47 @@ public class Painter {
 
     public void draw() {
         Painter.clearScene(pane);
-        double padding = 10d;
-        double currentXPos = padding, currentYPos = padding, nextXPos = 0, nextYPos = 0;
-        double lowerYBound = 0;
+
         for(Figure figure : figures) {
             if(figure instanceof MyCircle myCircle) {
-                double diameter = myCircle.getDiameter();
-                while (true) {
-                    if(currentXPos + diameter + padding <= pane.getWidth()) {
-                        if(currentYPos + diameter + padding <= pane.getHeight()) {
-                            double radius = myCircle.getRadius();
-                            drawCircle(currentXPos + radius, currentYPos + radius, myCircle);
-                            currentXPos += diameter + padding;
-                            lowerYBound = Math.max(currentYPos + diameter, lowerYBound);
-                            break;
-                        } else {
-                            throw new RuntimeException();
-                        }
-                    } else {
-                        currentXPos = padding;
-                        currentYPos = lowerYBound + padding;
-                    }
-                }
+                checkBounds(myCircle.getDiameter());
+                drawCircle(currentXPos + myCircle.getRadius(), currentYPos + myCircle.getRadius(), myCircle);
+                increaseBounds(myCircle.getDiameter());
             } else if(figure instanceof MySquare mySquare) {
-                double side = mySquare.getSide();
-                while (true) {
-                    if(currentXPos + side + padding <= pane.getWidth()) {
-                        if(currentYPos + side + padding <= pane.getHeight()) {
-                            drawSquare(currentXPos, currentYPos, mySquare);
-                            currentXPos += side + padding;
-                            lowerYBound = Math.max(currentYPos + side, lowerYBound);
-                            break;
-                        } else {
-                            throw new RuntimeException();
-                        }
-                    } else {
-                        currentXPos = padding;
-                        currentYPos = lowerYBound + padding;
-                    }
-                }
+                checkBounds(mySquare.getSide());
+                drawSquare(currentXPos, currentYPos, mySquare);
+                increaseBounds(mySquare.getSide());
             } else if(figure instanceof MyTriangle myTriangle) {
                 drawTriangle(currentXPos, currentYPos + myTriangle.getC().getY(),
                         currentXPos + myTriangle.getB().getX(), currentYPos + myTriangle.getC().getY(),
                         currentXPos + myTriangle.getC().getX(), currentYPos, myTriangle);
-                currentXPos += (Math.max(myTriangle.getB().getX(), myTriangle.getC().getX())) + padding;
+                currentXPos += (Math.max(myTriangle.getB().getX(), myTriangle.getC().getX())) + PADDING;
                 lowerYBound = Math.max(lowerYBound, myTriangle.getB().getY());
             }
         }
+    }
+
+    private void checkBounds(double offset) {
+        if(offset > pane.getWidth())
+            throw new IllegalStateException(EXCEPTION_MESSAGE);
+
+        while (true) {
+            if(currentXPos + offset + PADDING <= pane.getWidth()) {
+                if(currentYPos + offset + PADDING <= pane.getHeight()) {
+                    break;
+                } else {
+                    throw new IllegalStateException(EXCEPTION_MESSAGE);
+                }
+            } else {
+                currentXPos = PADDING;
+                currentYPos = lowerYBound + PADDING;
+            }
+        }
+    }
+
+    private void increaseBounds(double offset) {
+        currentXPos += offset + PADDING;
+        lowerYBound = Math.max(currentYPos + offset, lowerYBound);
     }
 
     private void drawCircle(double x, double y, MyCircle myCircle) {
