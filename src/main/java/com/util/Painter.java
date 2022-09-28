@@ -29,20 +29,26 @@ public class Painter {
         for(Figure figure : figures) {
             if(figure instanceof MyCircle myCircle) {
                 checkBounds(myCircle.getDiameter());
-                drawCircle(currentXPos + myCircle.getRadius(), currentYPos + myCircle.getRadius(), myCircle);
-                increaseBounds(myCircle.getDiameter());
+                drawCircle(myCircle);
+                increaseBounds(myCircle.getDiameter(), myCircle.getDiameter());
             } else if(figure instanceof MySquare mySquare) {
                 checkBounds(mySquare.getSide());
-                drawSquare(currentXPos, currentYPos, mySquare);
-                increaseBounds(mySquare.getSide());
+                drawSquare(mySquare);
+                increaseBounds(mySquare.getSide(), mySquare.getSide());
             } else if(figure instanceof MyTriangle myTriangle) {
-                drawTriangle(currentXPos, currentYPos + myTriangle.getC().getY(),
-                        currentXPos + myTriangle.getB().getX(), currentYPos + myTriangle.getC().getY(),
-                        currentXPos + myTriangle.getC().getX(), currentYPos, myTriangle);
-                currentXPos += (Math.max(myTriangle.getB().getX(), myTriangle.getC().getX())) + PADDING;
-                lowerYBound = Math.max(lowerYBound, myTriangle.getB().getY());
+                double offset = getTriangleOffset(myTriangle);
+                checkBounds(offset);
+                drawTriangle(myTriangle);
+                increaseBounds(offset, currentYPos + myTriangle.getC().getY());
             }
         }
+    }
+
+    private double getTriangleOffset(MyTriangle triangle) {
+        double cX = triangle.getC().getX();
+        double bX = triangle.getB().getX();
+        double offset = cX < 0 ? Math.abs(cX) + bX: bX;
+        return Math.max(offset, cX);
     }
 
     private void checkBounds(double offset) {
@@ -63,33 +69,38 @@ public class Painter {
         }
     }
 
-    private void increaseBounds(double offset) {
-        currentXPos += offset + PADDING;
-        lowerYBound = Math.max(currentYPos + offset, lowerYBound);
+    private void increaseBounds(double offsetX, double offsetY) {
+        currentXPos += offsetX + PADDING;
+        lowerYBound = Math.max(currentYPos + offsetY, lowerYBound);
     }
 
-    private void drawCircle(double x, double y, MyCircle myCircle) {
+    private void drawCircle(MyCircle myCircle) {
         Circle circle = new Circle(myCircle.getRadius());
-        circle.setCenterX(x);
-        circle.setCenterY(y);
+        circle.setCenterX(currentXPos + myCircle.getRadius());
+        circle.setCenterY(currentYPos + myCircle.getRadius());
         circle.setFill(myCircle.getColor());
         Tooltip.install(circle, new Tooltip(myCircle.displayInfo()));
         pane.getChildren().add(circle);
     }
 
-    private void drawSquare(double x, double y, MySquare mySquare) {
+    private void drawSquare(MySquare mySquare) {
         Rectangle square = new Rectangle();
         square.setWidth(mySquare.getSide());
         square.setHeight(mySquare.getSide());
-        square.setX(x);
-        square.setY(y);
+        square.setX(currentXPos);
+        square.setY(currentYPos);
         square.setFill(mySquare.getColor());
         Tooltip.install(square, new Tooltip(mySquare.displayInfo()));
         pane.getChildren().add(square);
     }
 
-    private void drawTriangle(double ax, double ay, double bx, double by, double cx, double cy,
-                              MyTriangle myTriangle) {
+    private void drawTriangle(MyTriangle myTriangle) {
+        double ax = currentXPos;
+        double ay = currentYPos + myTriangle.getC().getY();
+        double bx = currentXPos + myTriangle.getB().getX();
+        double by = currentYPos + myTriangle.getC().getY();
+        double cx = currentXPos + myTriangle.getC().getX();
+        double cy = currentYPos;
         Polygon triangle = new Polygon();
         triangle.getPoints().addAll(ax, ay, bx, by, cx, cy);
         triangle.setFill(myTriangle.getColor());
