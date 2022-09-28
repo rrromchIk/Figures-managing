@@ -95,12 +95,16 @@ public class Painter {
     }
 
     private void drawTriangle(MyTriangle myTriangle) {
-        double ax = currentXPos;
-        double ay = currentYPos + myTriangle.getC().getY();
-        double bx = currentXPos + myTriangle.getB().getX();
-        double by = currentYPos + myTriangle.getC().getY();
-        double cx = currentXPos + myTriangle.getC().getX();
+        double cOffset = Math.abs(myTriangle.getC().getX()) + currentXPos;
+        double cx = myTriangle.getC().getX() < 0 ? currentXPos : cOffset;
         double cy = currentYPos;
+
+        double ax = myTriangle.getC().getX() < 0 ? cOffset : currentXPos;
+        double ay = currentYPos + myTriangle.getC().getY();
+
+        double bx = ax + myTriangle.getB().getX();
+        double by = currentYPos + myTriangle.getC().getY();
+
         Polygon triangle = new Polygon();
         triangle.getPoints().addAll(ax, ay, bx, by, cx, cy);
         triangle.setFill(myTriangle.getColor());

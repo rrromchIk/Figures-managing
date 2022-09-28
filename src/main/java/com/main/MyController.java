@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-// ⁃ adding on scene algorithm  | in process
-
 public class MyController implements Initializable {
     private static final String THERE_ARE_NO_FIGURES = "There are no figures added!";
     private static final String TRY_TO_ADD_ANY_FIGURE = "Try to add any figure :)";
