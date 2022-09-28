@@ -15,8 +15,8 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="884.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.MyController">
    <children>
-      <Pane fx:id="pane" prefHeight="552.0" prefWidth="882.0" />
-      <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
+      <Pane fx:id="pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="882.0" />
+      <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #DFDFDF;">
          <children>
             <Label fx:id="sceneStatus" prefHeight="16.0" prefWidth="448.0" text="↑ Scene: Is empty">
                <font>
@@ -37,7 +37,7 @@
             <Insets />
          </opaqueInsets>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="106.0" prefWidth="882.0" spacing="5.0">
+      <HBox alignment="CENTER" prefHeight="106.0" prefWidth="882.0" spacing="5.0" style="-fx-background-color: #3C3F41;">
          <children>
             <Button fx:id="addFigureButton" mnemonicParsing="false" onAction="#onAddFigureButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Add">
                <tooltip>
@@ -73,7 +73,7 @@
             <Insets bottom="7.0" left="30.0" right="30.0" top="7.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" style="-fx-background-color: #3C3F41;">
          <children>
             <Button fx:id="maxAreaButton" mnemonicParsing="false" onAction="#onMaxAreaFigureButtonClicked" prefHeight="30.0" text="Max S">
                <tooltip>
@@ -98,7 +98,7 @@
             <Insets bottom="7.0" left="30.0" right="30.0" top="7.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" style="-fx-background-color: #3C3F41;">
          <children>
             <Button fx:id="fillButton" mnemonicParsing="false" onAction="#onFillButtonClicked" prefHeight="30.0" text="Fill">
                <tooltip>
@@ -119,7 +119,7 @@
          <padding>
             <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
          </padding></HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" style="-fx-background-color: #3C3F41;">
          <children>
             <Button fx:id="greaterThan" mnemonicParsing="false" onAction="#onGreaterThanButtonClicked" prefHeight="30.0" text="Greater than">
                <tooltip>
