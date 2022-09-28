@@ -2,7 +2,9 @@ package com.util;
 
 import com.figures.*;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -39,9 +41,10 @@ public class Painter {
                 double offset = getTriangleOffset(myTriangle);
                 checkBounds(offset);
                 drawTriangle(myTriangle);
-                increaseBounds(offset, currentYPos + myTriangle.getC().getY());
+                increaseBounds(offset, myTriangle.getC().getY());
             }
         }
+        System.out.println("x: " + currentXPos + " \ny: " + currentYPos + " \nlower: " + lowerYBound + "\n");
     }
 
     private double getTriangleOffset(MyTriangle triangle) {
@@ -54,7 +57,6 @@ public class Painter {
     private void checkBounds(double offset) {
         if(offset > pane.getWidth())
             throw new IllegalStateException(EXCEPTION_MESSAGE);
-
         while (true) {
             if(currentXPos + offset + PADDING <= pane.getWidth()) {
                 if(currentYPos + offset + PADDING <= pane.getHeight()) {
