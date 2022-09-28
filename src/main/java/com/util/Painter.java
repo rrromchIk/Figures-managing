@@ -17,7 +17,7 @@ public class Painter {
                                                     "or delete current figures!";
     private double currentXPos = PADDING;
     private double currentYPos = PADDING;
-    private double lowerYBound = 0;
+    private double lowerYBound = PADDING;
 
     public Painter(Pane pane, List<Figure> list) {
         this.pane = pane;
@@ -113,6 +113,6 @@ public class Painter {
     }
 
     public static void clearScene(Pane pane) {
-        pane.getChildren().forEach(node -> node.setVisible(false));
+        pane.getChildren().clear();
     }
 }
