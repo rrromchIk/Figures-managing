@@ -47,11 +47,11 @@
                <tooltip>
                   <Tooltip text="Choose figure from list" />
                </tooltip></ComboBox>
-            <TextField fx:id="nameTextField" prefHeight="30.0" prefWidth="114.0" promptText="&quot;name&quot;">
+            <TextField fx:id="nameTextField" prefHeight="30.0" prefWidth="100.0" promptText="&quot;name&quot;">
                <tooltip>
                   <Tooltip text="Enter name of figure" />
                </tooltip></TextField>
-            <TextField fx:id="sizeTextField" prefHeight="30.0" prefWidth="97.0" promptText="size">
+            <TextField fx:id="sizeTextField" prefHeight="30.0" prefWidth="100.0" promptText="size">
                <tooltip>
                   <Tooltip text="Enter size of figure" />
                </tooltip></TextField>
@@ -70,7 +70,7 @@
             <Insets />
          </opaqueInsets>
          <padding>
-            <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+            <Insets bottom="7.0" left="30.0" right="30.0" top="7.0" />
          </padding>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
@@ -79,12 +79,12 @@
                <tooltip>
                   <Tooltip text="Press to see figure with max area" />
                </tooltip></Button>
-            <TextField fx:id="maxAreaTextField" editable="false" prefHeight="30.0" prefWidth="114.0" promptText="name of max area" />
+            <TextField fx:id="maxAreaTextField" editable="false" prefHeight="30.0" prefWidth="115.0" promptText="name of max area" />
             <Button fx:id="minPerimeterButton" mnemonicParsing="false" onAction="#onMinPerimeterFigureButtonClicked" prefHeight="30.0" text="Min P">
                <tooltip>
                   <Tooltip text="Press to see figure with min perimeter" />
                </tooltip></Button>
-            <TextField fx:id="minPerimeterTextField" editable="false" prefHeight="30.0" prefWidth="141.0" promptText="name of min perimeter" />
+            <TextField fx:id="minPerimeterTextField" editable="false" prefHeight="26.0" prefWidth="115.0" promptText="name of min perimeter" />
             <Button fx:id="writeToFileButton" mnemonicParsing="false" onAction="#onWriteToFileButtonCLicked" prefHeight="30.0" text="Write to file">
                <tooltip>
                   <Tooltip text="Press to write info about figures to file" />
@@ -95,7 +95,7 @@
                </tooltip></Button>
          </children>
          <padding>
-            <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+            <Insets bottom="7.0" left="30.0" right="30.0" top="7.0" />
          </padding>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
@@ -117,7 +117,7 @@
             <Insets />
          </VBox.margin>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
          </padding></HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
          <children>
@@ -125,13 +125,13 @@
                <tooltip>
                   <Tooltip text="Press to display figures with area grater than given" />
                </tooltip></Button>
-            <TextField fx:id="givenArea" prefHeight="26.0" prefWidth="99.0" promptText="area">
+            <TextField fx:id="givenArea" prefHeight="26.0" prefWidth="82.0" promptText="area">
                <tooltip>
                   <Tooltip text="Enter area" />
                </tooltip></TextField>
          </children>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
          </padding>
       </HBox>
    </children>

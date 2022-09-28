@@ -53,7 +53,7 @@ public class MyTriangle extends Figure {
 
     private void setPoints(double a, double b, double c) {
         double x = (b * b - c * c + a * a) / (2 * a);
-        double y = Math.sqrt(Math.pow(b,2) - x * x);
+        double y = Math.sqrt(Math.pow(b, 2) - x * x);
         this.pointA = new Point(0, 0);
         this.pointB = new Point(a, 0);
         this.pointC = new Point(x, y);

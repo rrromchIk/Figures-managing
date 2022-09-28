@@ -5,7 +5,10 @@ import com.util.Painter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -76,7 +79,7 @@ public class MyController implements Initializable {
 
     public void onReadFromFileButtonClicked() {
         try {
-            List<Figure> list = Figure.readFiguresFromFile("src\\main\\resources\\inputData.txt");
+            List<Figure> list = Figure.readFiguresFromFile(MyApplication.PATH_TO_INPUT_FILE);
             list.forEach(this::addToListAndDisplay);
         } catch (RuntimeException e) {
             showAlert("Bad input format!", "Change input data format and try again!");
@@ -95,7 +98,7 @@ public class MyController implements Initializable {
 
     public void onWriteToFileButtonCLicked() throws IOException {
         if(!figures.isEmpty()) {
-            Figure.writeToFile(figures, "src\\main\\resources\\outputData.txt");
+            Figure.writeToFile(figures, MyApplication.PATH_TO_OUTPUT_FILE);
             updateWriteToFileStatus("Info wrote to the file: outputData.txt!");
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
@@ -189,9 +192,14 @@ public class MyController implements Initializable {
 
     private void showAlert(String headerText, String bodyText) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Ups..");
+        alert.setTitle(MyApplication.WINDOW_TITLE);
         alert.setHeaderText(headerText);
         alert.setContentText(bodyText);
+        ((Stage)alert.getDialogPane()
+                .getScene()
+                .getWindow())
+                .getIcons()
+                .add(new Image(MyApplication.ICON_PATH));
         alert.showAndWait();
     }
 
@@ -199,10 +207,10 @@ public class MyController implements Initializable {
         try {
             Painter painter = new Painter(pane, figures);
             painter.draw();
-            return true; //---------
+            return true;
         } catch (IllegalStateException e) {
             showAlert("Ups...", e.getMessage());
-            return false; //--------
+            return false;
         }
     }
 

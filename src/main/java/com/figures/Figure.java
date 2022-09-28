@@ -21,7 +21,7 @@ public abstract class Figure {
 
     protected static int counterOfFigures = 1;
 
-    Figure(String name) {
+    protected Figure(String name) {
         this.name = name;
         counterOfFigures++;
     }

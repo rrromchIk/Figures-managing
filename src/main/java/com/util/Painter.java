@@ -26,7 +26,6 @@ public class Painter {
 
     public void draw() {
         Painter.clearScene(pane);
-
         for(Figure figure : figures) {
             if(figure instanceof MyCircle myCircle) {
                 checkBounds(myCircle.getDiameter());
