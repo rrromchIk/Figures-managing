@@ -24,11 +24,11 @@ public class MyCircle extends Figure {
 
     public MyCircle(String name, double radius) {
         super(name);
-        setRadius(radius);
+        setParameters(radius);
         setColor(DEFAULT_CIRCLE_COLOR);
     }
 
-    public void setRadius(double radius) {
+    public void setParameters(double radius) {
         if(radius > 0.00001) {
             this.radius = radius;
             setArea(Math.PI * radius * radius);

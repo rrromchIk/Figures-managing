@@ -24,11 +24,11 @@ public class MySquare extends Figure {
 
     public MySquare(String name, double side) {
         super(name);
-        setSide(side);
+        setParameters(side);
         setColor(DEFAULT_SQUARE_COLOR);
     }
 
-    public void setSide(double side) {
+    public void setParameters(double side) {
         if(side > 0.00001) {
             this.side = side;
             setArea(side * side);
