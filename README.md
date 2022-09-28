@@ -25,4 +25,8 @@ Figures app
     
     5) Реалізувати можливість зафарбовування заданої фігури у заданий колір.
     
+    ![screen1](https://user-images.githubusercontent.com/90086332/192840612-a91d6cc2-297e-4107-9c13-318b2d944ee9.png)
+
+)
+
 
