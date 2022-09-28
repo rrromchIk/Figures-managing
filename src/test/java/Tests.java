@@ -178,6 +178,36 @@ public class Tests {
     }
 
     @Test
+    public void testTrianglePoints() {
+        MyTriangle.Point pointA = new MyTriangle.Point(0, 0);
+        MyTriangle.Point pointB = new MyTriangle.Point(100, 0);
+        MyTriangle.Point pointC = new MyTriangle.Point(50, 86.60254037844386);
+        MyTriangle triangle = new MyTriangle("triangle");
+
+        assertEquals(pointA, triangle.getA());
+        assertEquals(pointB, triangle.getB());
+        assertEquals(pointC, triangle.getC());
+
+        triangle = new MyTriangle("triangle1", 300, 390, 500);
+        pointA = new MyTriangle.Point(0, 0);
+        pointB = new MyTriangle.Point(300, 0);
+        pointC = new MyTriangle.Point(-13.166666666666666, 389.7776787976562);
+
+        assertEquals(pointA, triangle.getA());
+        assertEquals(pointB, triangle.getB());
+        assertEquals(pointC, triangle.getC());
+
+        triangle = new MyTriangle("triangle1", 300, 500, 390);
+        pointA = new MyTriangle.Point(0, 0);
+        pointB = new MyTriangle.Point(300, 0);
+        pointC = new MyTriangle.Point(300d + 13.166666666666666, 389.7776787976562);
+
+        assertEquals(pointA, triangle.getA());
+        assertEquals(pointB, triangle.getB());
+        assertEquals(pointC, triangle.getC());
+    }
+
+    @Test
     public void testReadFromFile() {
         assertThrows(NoSuchElementException.class,
                 () -> Figure.readFiguresFromFile("src\\main\\resources\\testFile1.txt"));
