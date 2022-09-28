@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -96,8 +98,10 @@ public class MyController implements Initializable {
 
     public void onWriteToFileButtonCLicked() throws IOException {
         if(!figures.isEmpty()) {
-            Figure.writeToFile(figures, MyApplication.PATH_TO_OUTPUT_FILE);
-            updateWriteToFileStatus("Info wrote to the file: outputData.txt!");
+            String path = MyApplication.PATH_TO_OUTPUT_FILE;
+            String nameOfFile = path.substring(path.lastIndexOf("\\") + 1);
+            Figure.writeToFile(figures, path);
+            updateWriteToFileStatus("Info wrote to the file: " + nameOfFile);
         } else {
             showAlert(THERE_ARE_NO_FIGURES, TRY_TO_ADD_ANY_FIGURE);
         }
@@ -156,6 +160,7 @@ public class MyController implements Initializable {
         clearTextFields();
         namesComboBox.getItems().clear();
         namesComboBox.setPromptText("Name of figure");
+        colorPicker.setValue(Color.WHITE);
         updateSceneStatus("↑ Scene: Cleaned)");
         updateWriteToFileStatus("");
     }
@@ -179,6 +184,7 @@ public class MyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         figuresComboBox.getItems().addAll("Circle", "Square", "Triangle");
+        pane.setBackground(Background.fill(MyApplication.SCENE_BACKGROUND));
     }
 
     private void clearTextFields() {
