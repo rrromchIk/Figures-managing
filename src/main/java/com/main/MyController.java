@@ -48,7 +48,7 @@ public class MyController implements Initializable {
         String name = nameTextField.getText();
         String size = sizeTextField.getText();
         try {
-            validateInput();
+            validateInput(name, size);
             switch (figuresComboBox.getValue()) {
                 case "Circle" ->  addToListAndDisplay(new MyCircle(name, Double.parseDouble(size)));
                 case "Square" -> addToListAndDisplay(new MySquare(name, Double.parseDouble(size)));
@@ -66,10 +66,7 @@ public class MyController implements Initializable {
         clearTextFields();
     }
 
-    private void validateInput() {
-        String name = nameTextField.getText();
-        String size = sizeTextField.getText();
-
+    private void validateInput(String name, String size) {
         if (figuresComboBox.getValue() == null)
             throw new IllegalArgumentException("Choose figure!!!");
         if(size.isEmpty() || name.isEmpty()) {
