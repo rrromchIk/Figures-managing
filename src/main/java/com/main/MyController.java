@@ -164,18 +164,22 @@ public class MyController implements Initializable {
 
     public void onGreaterThanButtonClicked() {
         String text = givenArea.getText();
-        if(!text.isEmpty()) {
-            List<Figure> list = Figure.getFiguresWithAreaGreaterThenGiven(figures, Double.parseDouble(text));
-            if(list.isEmpty())
-                showAlert("There are no figures with are greater than " + text, "Try again!");
-            else {
-                displayFigures(list);
-                updateSceneStatus("↑ Scene: Figures with are greater than: " +  text + "! :)");
-            }
+        double area;
+        try {
+            area = Double.parseDouble(text);
+        } catch (IllegalArgumentException e) {
+            showAlert("It looks like something went wrong!", "Enter numeric value!");
             givenArea.setText("");
-        } else {
-            showAlert("It looks like something went wrong!", "Enter any area value!");
+            return;
         }
+        List<Figure> list = Figure.getFiguresWithAreaGreaterThenGiven(figures, area);
+        if(list.isEmpty())
+            showAlert("There are no figures with are greater than " + text, "Try again!");
+        else {
+            displayFigures(list);
+            updateSceneStatus("↑ Scene: Figures with are greater than: " +  text + "! :)");
+        }
+        givenArea.setText("");
     }
 
     @Override
